@@ -1,5 +1,6 @@
 package com.docmind.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -16,8 +17,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserService {
 	private final UserRepository userRepository; //dependency Injection
+	private final PasswordEncoder passwordEncoder;
 	
 	public UserResponse registerUser(CreateUserRequest request) {
+		
+		// 1. Scramble the raw plain-text password into a non-reversible cryptographic hash
+		String encryptedPassword = passwordEncoder.encode(request.getPassword());
+		
+		// 3. Set the scrambled password back into the request packet
+		request.setPassword(encryptedPassword);
 		
 		// 1. Translate the incoming web request packet into a raw database Entity row
 		User userEntity = UserMapper.toEntity(request);
