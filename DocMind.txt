@@ -1,0 +1,151 @@
+DocMind - RAG Architecture
+
+Stage 1 — Project Setup
+1) @Controller : 
+	Hey Spring, look at this class! This is our Waiter. Please make it sit near the front door of our application, listen for incoming customer requests from the internet, and decide what to do with them." Without that label (Annotation), your class is just a dead text file. Spring Boot won't monitor it, and it will ignore any web traffic trying to reach it.
+	The @Controller class houses those methods using maps like @GetMapping("/home"). It intercepts the URL and says: "Ah, you clicked '/home'! I know exactly which code to execute for that."
+	returns -> A view (html,jsp,webpage...)
+	
+2) @RestController : 
+	It bypasses the user interface (UI) entirely and returns raw data (usually JSON). 
+	It is actually just a combination of two things wrapped into one:
+	@RestController = @Controller + @ResponseBody
+	
+	@ResponseBody = "Hey, whatever this method returns, do not look for an HTML file. Just convert the Java object directly into raw JSON text and send it straight back over the internet."
+	
+	
+3) @Service  : 
+	Head Chef in the kitchen.
+	Speacialized version of Spring's Standard @Component annotation.
+	"Hey Spring, register this class as a core business bean! This file contains our application's heavy lifting, rules, and decision-making logic."
+	
+4) @Repository : 
+	"This file is our direct link to the database. Please translate any database connection errors into clean Spring exceptions, and automatically generate the SQL queries needed to read, update, or delete our data."
+	
+	In modern Spring Boot, you usually don't even write the database queries yourself! You just extend a built-in interface called JpaRepository:
+	.save(myObject) -> insert a row ino the db
+	.findById(123)  ->  Finds a row by its primary key.
+	.delete(myObject) ->  Erases a row
+	
+5) @Entity : 
+	
+	How Java and Databases talk to each other, because they speak two completely different languages.
+	IT is a Translation blueprin : It uses a technology called ORM (Object-Relational Mapping).
+	"Hey, this isn't just a regular Java object floating around in memory. This class represents a row in our database table. Please create a table for it, and map every variable inside this class to a column in that table!"
+	
+	When you start your Spring Boot application in development mode, Hibernate reads all your @Entity classes and automatically builds your database tables for you from scratch. You don't even have to open a database terminal to write CREATE TABLE scripts.
+	
+ 6) Jar (Java Archive) -> Spring Boot bundles your compiled Java code, your configurations, and an entire web server (Tomcat) into a single .jar file.
+     You don't need to install any external web software on your computer or cloud server. You simply open your terminal and type java -jar Docmind.jar. The file unpacks itself, spins up its own internal server, and puts your website live instantly.
+ 
+ 7) WAR (Web Archive) -> 
+	A WAR file contains only your application code and assets, but it does not include a web server.
+	To run a WAR file, you must first manually download, install, and configure a massive, standalone external server machine (like Apache Tomcat or WildFly) on your computer. Then, you "deploy" (drop) your .war file inside that running server's folder.
+	
+  8) pom.xml - Project Object Model
+		It is the instruction manual that Maven (your build clerk) reads to figure out, how to compile your code and what tools to download from the internet.
+		Project Identity - GAV
+		groupId,artifactId,version -It uniquely identifies your app.
+	  
+	   - <parent> : By claiming this parent, your project inherits a massive list of pre-configured settings from the Spring team.
+	   you don't have to specify version numbers for your core Spring libraries? That is because the parent already knows exactly which versions match perfectly with Spring Boot version 3.5.16 so your app won't crash.
+	   
+	   - <dependencies> : Every <dependency> is an external tool your app needs. Maven looks at these tags, goes to a massive global server on the internet (Maven Central), downloads the code blocks, and links them to your app automatically.
+				- spring-boot-starter-web: The engine that turns your app into a web server so it can listen for URLs, process API requests, and send back responses.
+				- spring-boot-starter-data-jpa: The framework that maps your Java entities to database tables and handles database connection pooling.
+				- spring-boot-starter-validation: Gives you annotations like @NotNull or @Size to check if input data sent by users is clean before your app processes it.
+				- springdoc-openapi-starter-webmvc-ui: This is your Swagger dependency! It scans your endpoints and builds that visual, interactive API playground documentation     webpage.
+				- postgresql: The pipeline driver that lets your Java app talk to a physical PostgreSQL database.
+				- lombok: The tool that automatically generates your getters, setters, and constructors behind the scenes so you don't have to type them out by hand.
+				- spring-boot-devtools: A developer's helper. Every time you change your code and save a file, it restarts your server in 1 second automatically so you don't have to turn it off and on manually.
+				- spring-boot-starter-test: Puts testing tools (like JUnit) in your project so you can write automation tests later.
+		- : <build> and <plugins> : 
+				-The bottom section defines the Plugins. Think of plugins as specialized factory machinery that Maven runs during the final building process.
+				- spring-boot-maven-plugin: This is the factory machine that compresses your entire application, along with the embedded Tomcat web server, into that single executable JAR file we talked about earlier.
+				- maven-compiler-plugin (with Lombok path): This configures your Java compiler to allow Lombok to intercept compilation and plug in your getters and setters right as the code turns into machine language.
+				
+	9) application.properties : It is a simple text configuration file located in the src/main/resources folder.
+		It consists of straightforward key-value pairs (key=value) that act as a central warehouse for external settings. Instead of hardcoding credentials, database links, port configurations, or server rules directly into your Java source files, you declare them here.
+		
+	10) Folder Structure : 
+			1)src/main/java -> most important folder in your entire project. Every single Java file you write will go inside here.
+			2)src/main/resources -> This folder is for everything that is not Java code, but that your application needs to survive.
+								-static: This is where you would place raw CSS, JavaScript, or image files if you were building a traditional web UI.
+								-templates: If you use HTML templating tools (like Thymeleaf), your raw HTML pages go here.
+								-application.properties: Your central configuration control panel that we discussed earlier!
+			3)src/test/java - This folder structure mimics your main/java folder exactly, but it is purely for writing automated unit tests to verify your logic works. It doesn't affect production code.
+			4) JRE System Library & Maven Dependencies -The Toolkits
+				-JRE System Library: This contains the fundamental core Java tools (like String, List, System) provided by Java 17.
+				-Maven Dependencies: This is a read-only virtual folder. Remember your pom.xml shopping list? Maven downloaded all those jars (spring-web, lombok, postgresql) from the internet and neatly organized them right here so your Java files can use them.
+		-In Spring Boot, your package structure follows a strict hierarchy. com.docmind is the parent package.
+			Whenever you create new packages for your layers (like Controllers, Services, and Repositories), they must be created inside or under this parent package. For example:
+			-com.docmind.controller
+			-com.docmind.service
+			-com.docmind.model
+			
+			5) target -> The output Bin : When you build your project, the Java Compiler takes your human-readable .java files and translates them into machine-readable .class files (bytecode). Maven collects all these compiled .class files, along with your resources, and stores them inside this target folder.
+			When you run the packaging command later, your final executable JAR file will be generated right inside this folder.
+			6) You can actually delete this folder completely at any time (there is a Maven command called mvn clean that does exactly this). The next time you run or build your app, Maven will simply recreate the target folder from scratch.
+			
+			7) The mvnw and mvnw.cmd (Maven Wrapper)
+				-mvnw is a shell script for Mac and Linux systems.
+				-mvnw.cmd is a batch script for Windows systems.
+				(if in my system app working fine but in friend system not working -Maven Wrapper solves this completely. It is a tiny script that acts like a self-installing manager. -nstead of running a general command like mvn clean install, you run ./mvnw clean install -> The script looks at your project, checks exactly which version of Maven your project requires, and says: "Oh, you don't have the right version installed on this computer? Don't worry, let me download the exact correct version into a hidden folder for you real quick."
+				
+	11) Install PostgreSQL -> 
+		username : postgres
+		password : Welcome@01
+		Database : docmind
+		
+	12) open application.properties and connect with db (or else while starting application error will come)
+		
+		spring.datasource.url=jdbc:postgresql://localhost:5432/docmind
+		spring.datasource.username=postgres
+		spring.datasource.password=Welcome@01
+		spring.jpa.hibernate.ddl-auto=update
+		
+		*) ddl-auto : Hibernate (the engine under Spring Data JPA) to automatically build the tables for us based on our future Java code:
+			update : This is amazing for development. Every time you create a new Java Entity (like a User class) and restart the app, Hibernate will automatically check your database, see if the table exists, and create or update it without deleting your existing test data.
+	13) After running springboot applicaiton check this path : http://localhost:8080/swagger-ui/index.html
+	
+	14) step-by-step lifecycle flow of what happens when you run your application:
+		Step 1: Compilation Check
+				-The moment you click "Run As -> Spring Boot App", your IDE looks at your code.
+				-If you made any changes, it invokes the Java Compiler to compile your .java text files into bytecode .class files. This is where Lombok does its work behind the scenes, generating all your getters and setters into those files.
+				
+		Step 2: The Classpath is Set
+				-Your IDE bundles your compiled classes together with all those .jar files sitting in your Maven Dependencies folder. This combined package of code is called the Classpath.
+		
+		Step 3: Enter DocmindApplication.java
+				-The Java Virtual Machine (JVM) fires up and looks directly for the main method. The flow officially begins at the very first line inside your root class:
+				public static void main(String[] args){
+					SpringApplication.run(DocmindApplication.class, args); // <-- Flow enters here!
+				}
+				-It tells Java: "Hand over the controls to the Spring Framework engine."
+				-Once Spring takes the controls, it executes these internal steps in a precise sequence:
+				[Start Engine] ➔ [Load properties] ➔ [Scan Packages] ➔ [Configure DB] ➔ [Launch Web Server]
+				
+		Step 4: Reading the Configuration (application.properties)
+				-Spring immediately searches your resource folder and opens application.properties. It reads the lines you typed out (spring.application.name, database credentials, database URL) and stores them in its memory bank so it knows the environment's rules.
+				
+		Step 5: Component Scanning
+				-Spring begins scanning your packages looking for specific annotations. It starts at your root package (com.docmind) and crawls downward into every sub-package.
+					-It is looking for annotations like @RestController, @Service, or @Component.
+					-When it finds one, it instantiates it as a managed Java object (called a Spring Bean) and safely parks it in its core container registry.
+				
+		Step 6: Database Initialization (Spring Data JPA)
+				-Next, Spring detects your database configurations. It activates the PostgreSQL Driver tool from the classpath, dials out to your connection string
+				-(jdbc:postgresql://localhost:5432/docmind), and logs in using your username and password.
+				Because we added spring.jpa.hibernate.ddl-auto=update, Hibernate steps in right here, scans your database room, and verifies or builds any required tables automatically.
+				
+		Step 7: Starting the Embedded Web Server (Tomcat)
+				-Finally, Spring Boots spins up its built-in web server (Apache Tomcat) right inside your running application process. It binds itself to port 8080 by default.
+				
+				Once Tomcat is successfully listening on port 8080, Spring prints the final diagnostic line in your console logs:
+				INFO --- [main] com.docmind.DocmindApplication : Started DocmindApplication in X.XX seconds
+				
+				The startup flow is now complete. The application stops executing initialization code and enters a passive listening state—sitting open and waiting for you to send a web request or open your browser to view your Swagger UI page!
+	
+Stage 2 : Stage 2 — Database Design (Database + Entity Design)
+			
+			-You need to create them as new Packages inside your IDE, Because Eclipse/STS uses dot-notation (.) to represent nested folders, creating a new package named com.docmind.controller will automatically generate a clean controller subfolder right inside your main com.docmind folder on your computer's hard drive.
