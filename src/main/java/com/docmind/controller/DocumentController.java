@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/documents")
 public class DocumentController {
 	
-	private final DocumentService documentService;
+	private final DocumentService documentService; //dependency Injection
 	
 	//Core upload gate endpoint that accepts form multi-part data binaries
 	@PostMapping(value="/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -34,7 +34,7 @@ public class DocumentController {
 	
 	// 2. Fetch directory array listing for a given user scope
 	@GetMapping("/user/{userId}")
-	public List<DocumentResponse> getDocumentsByUser(@PathVariable Long userId){
+	public List<DocumentResponse> getDocumentsByUser(@PathVariable Long userId){ //userId from url will get store in userId pathVariable
 		return documentService.getDocumentsByUserId(userId);
 	}
 

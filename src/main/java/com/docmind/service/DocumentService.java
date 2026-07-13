@@ -47,7 +47,7 @@ public class DocumentService {
 		try {
 			
 			if(file.isEmpty()) {
-				throw new RuntimeException("Failed to save empty file");
+				throw new RuntimeException("Failed to save an empty file");
 			}
 			
 			// 1. Generate a clean, safe filename string target path
