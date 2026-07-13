@@ -36,8 +36,12 @@ public class DocumentService {
 		this.documentMapper = documentMapper;
 		
 		// Automatically build the target directories on your computer if they don't exist yet
+		//previously we were using 'Files.createDirectory(this.rootLocation);', so if folder already
+		//exists means error will come so we added if conditiona along with used 'createDirectories plural - here if already location available means we use this otherwise create one newly.
 		try {
-			Files.createDirectory(this.rootLocation);
+			if(!Files.exists(this.rootLocation)) {
+				Files.createDirectories(this.rootLocation);
+			}
 		}catch(IOException e) {
 			throw new RuntimeException("Could not initialize storage Path : ", e);
 		}

@@ -25,7 +25,7 @@ public class SecurityConfig {
 		.authorizeHttpRequests(auth -> auth
 		// Allow absolute public access to Swagger files and our user paths
 //		.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/users/**").permitAll()
-		.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/users/**","/documents/**").permitAll()
+		.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/users/**","/documents/**","/ai/**").permitAll()
 		.anyRequest().authenticated());
 		return http.build();
 	}

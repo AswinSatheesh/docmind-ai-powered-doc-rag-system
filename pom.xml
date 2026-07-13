@@ -29,6 +29,20 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	
+	<!-- 
+		<dependencyManagement>
+	    <dependencies>
+	        <dependency>
+	            <groupId>org.springframework.ai</groupId>
+	            <artifactId>spring-ai-bom</artifactId>
+	            <version>1.0.1</version>
+	            <type>pom</type> 
+	            <scope>import</scope>
+	        </dependency>
+	    </dependencies>
+    </dependencyManagement> -->
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,7 +87,19 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
+		<!--this is for running ollama model local
+			<dependency>
+    		<groupId>org.springframework.ai</groupId>
+    		<artifactId>spring-ai-starter-model-ollama</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-starter-model-google-genai</artifactId>
+			<version>1.1.5</version>
+		</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>
