@@ -38,4 +38,7 @@ public class Document {
 	
 	@Column(nullable = false)
 	private Long userId;
+	
+	@Column(columnDefinition = "TEXT") //Instead of standard varchar(255) this one is unlimited on String fields
+	private String Summary;
 }

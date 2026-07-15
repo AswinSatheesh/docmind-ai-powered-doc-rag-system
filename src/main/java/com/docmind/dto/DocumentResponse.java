@@ -14,4 +14,5 @@ public class DocumentResponse {
 	private Long fileSize;
 	private LocalDateTime uploadDate;
 	private Long userId;
+	private String summary;
 }

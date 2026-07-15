@@ -13,6 +13,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,9 @@ import com.docmind.repository.DocumentRepository;
 
 @Service
 public class AiService {
-	private final DocumentRepository documentRepository;
+	
+	@Autowired
+    DocumentRepository documentRepository;
 	private final Path rootLocation;
 //	private final ChatModel chatModel;
 	private final ChatClient chatClient;
@@ -87,6 +90,7 @@ public class AiService {
 	}
 	
 	
+	
 	/**
      * Simple helper to extract the file extension (e.g., "pdf", "txt")
      * 
@@ -112,5 +116,32 @@ public class AiService {
 			PDFTextStripper pdfStripper = new PDFTextStripper();
 			return pdfStripper.getText(pdDocument);// Strips and returns raw text content
 		}
+	}
+	
+	/**
+	 * Summarizes a document using a smart database caching approach.
+	 * If a summary already exists in the database, it is returned instantly.
+	 */
+	
+	public String summarizeDocument(Long documentId) {
+		// 1. Fetch the document metadata from PostgreSQL
+		Document document = documentRepository.findById(documentId).orElseThrow(()-> new RuntimeException("Document record not found with it : " + documentId));
+		
+		// 🚀 SMART CHECK: If we already have a saved summary, return it instantly!
+		
+		if(document.getSummary() != null && !document.getSummary().isBlank()) {
+			return document.getSummary();
+		}
+		
+		// 2. No summary cached yet. Let's ask Gemini to generate one.
+		// We reuse the chat pipeline but target a separate summary session ID.
+		String prompt = "Please provide a concise, structured, bullet-point summary of this document.";
+		String generatedSummary = chatWithDocument(documentId, prompt, "summary-session-" + documentId);
+		
+		// 3. PERSIST TO DATABASE: Cache the newly generated summary to PostgreSQL
+		document.setSummary(generatedSummary);
+		documentRepository.save(document);
+		
+		return generatedSummary;
 	}
 }

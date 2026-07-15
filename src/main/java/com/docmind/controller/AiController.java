@@ -26,4 +26,10 @@ public class AiController {
 	public String chatWithDocument(@PathVariable Long documentId, @RequestParam String question, @RequestParam String sessionId) {
 		return aiService.chatWithDocument(documentId, question, sessionId);
 	}
+	
+	// 🚀 ENDPOINT 1: Calls the summarized caching logic
+	@GetMapping("/summarize/{documentId}")
+	public String getDocumentSummary(@PathVariable Long documentId) {
+		return aiService.summarizeDocument(documentId);
+	}
 }
