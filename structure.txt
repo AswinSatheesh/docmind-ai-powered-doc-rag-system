@@ -1,0 +1,134 @@
+Folder PATH listing for volume New Volume
+Volume serial number is 00000082 6A08:BC7D
+E:.
+¦   .classpath
+¦   .factorypath
+¦   .gitattributes
+¦   .gitignore
+¦   .project
+¦   HELP.md
+¦   mvnw
+¦   mvnw.cmd
+¦   pom.xml
+¦   README.md
+¦   structure.txt
+¦   
++---.mvn
+¦   +---wrapper
+¦           maven-wrapper.properties
+¦           
++---.settings
+¦       org.eclipse.core.resources.prefs
+¦       org.eclipse.jdt.apt.core.prefs
+¦       org.eclipse.jdt.core.prefs
+¦       org.eclipse.m2e.core.prefs
+¦       org.springframework.ide.eclipse.prefs
+¦       
++---src
+¦   +---main
+¦   ¦   +---java
+¦   ¦   ¦   +---com
+¦   ¦   ¦       +---docmind
+¦   ¦   ¦           ¦   DocmindApplication.java
+¦   ¦   ¦           ¦   
+¦   ¦   ¦           +---config
+¦   ¦   ¦           ¦       SecurityConfig.java
+¦   ¦   ¦           ¦       
+¦   ¦   ¦           +---controller
+¦   ¦   ¦           ¦       AiController.java
+¦   ¦   ¦           ¦       DocumentController.java
+¦   ¦   ¦           ¦       UserController.java
+¦   ¦   ¦           ¦       
+¦   ¦   ¦           +---dto
+¦   ¦   ¦           ¦       CreateUserRequest.java
+¦   ¦   ¦           ¦       DocumentResponse.java
+¦   ¦   ¦           ¦       UpdateUserRequest.java
+¦   ¦   ¦           ¦       UserResponse.java
+¦   ¦   ¦           ¦       
+¦   ¦   ¦           +---entity
+¦   ¦   ¦           ¦       Document.java
+¦   ¦   ¦           ¦       User.java
+¦   ¦   ¦           ¦       
+¦   ¦   ¦           +---exception
+¦   ¦   ¦           +---mapper
+¦   ¦   ¦           ¦       DocumentMapper.java
+¦   ¦   ¦           ¦       UserMapper.java
+¦   ¦   ¦           ¦       
+¦   ¦   ¦           +---repository
+¦   ¦   ¦           ¦       DocumentRepository.java
+¦   ¦   ¦           ¦       UserRepository.java
+¦   ¦   ¦           ¦       
+¦   ¦   ¦           +---service
+¦   ¦   ¦                   AiService.java
+¦   ¦   ¦                   DocumentService.java
+¦   ¦   ¦                   UserService.java
+¦   ¦   ¦                   
+¦   ¦   +---resources
+¦   ¦       ¦   application.properties
+¦   ¦       ¦   
+¦   ¦       +---static
+¦   ¦       +---templates
+¦   +---test
+¦       +---java
+¦           +---com
+¦               +---docmind
+¦                       DocmindApplicationTests.java
+¦                       
++---target
+    +---classes
+    ¦   ¦   application.properties
+    ¦   ¦   
+    ¦   +---com
+    ¦   ¦   +---docmind
+    ¦   ¦       ¦   DocmindApplication.class
+    ¦   ¦       ¦   
+    ¦   ¦       +---config
+    ¦   ¦       ¦       SecurityConfig.class
+    ¦   ¦       ¦       
+    ¦   ¦       +---controller
+    ¦   ¦       ¦       AiController.class
+    ¦   ¦       ¦       DocumentController.class
+    ¦   ¦       ¦       UserController.class
+    ¦   ¦       ¦       
+    ¦   ¦       +---dto
+    ¦   ¦       ¦       CreateUserRequest.class
+    ¦   ¦       ¦       DocumentResponse.class
+    ¦   ¦       ¦       UpdateUserRequest.class
+    ¦   ¦       ¦       UserResponse.class
+    ¦   ¦       ¦       
+    ¦   ¦       +---entity
+    ¦   ¦       ¦       Document.class
+    ¦   ¦       ¦       User.class
+    ¦   ¦       ¦       
+    ¦   ¦       +---exception
+    ¦   ¦       +---mapper
+    ¦   ¦       ¦       DocumentMapper.class
+    ¦   ¦       ¦       UserMapper.class
+    ¦   ¦       ¦       
+    ¦   ¦       +---repository
+    ¦   ¦       ¦       DocumentRepository.class
+    ¦   ¦       ¦       UserRepository.class
+    ¦   ¦       ¦       
+    ¦   ¦       +---service
+    ¦   ¦               AiService.class
+    ¦   ¦               DocumentService.class
+    ¦   ¦               UserService.class
+    ¦   ¦               
+    ¦   +---META-INF
+    ¦       ¦   MANIFEST.MF
+    ¦       ¦   
+    ¦       +---maven
+    ¦           +---com.docmind
+    ¦               +---Docmind
+    ¦                       pom.properties
+    ¦                       pom.xml
+    ¦                       
+    +---generated-sources
+    ¦   +---annotations
+    +---generated-test-sources
+    ¦   +---test-annotations
+    +---test-classes
+        +---com
+            +---docmind
+                    DocmindApplicationTests.class
+                    
