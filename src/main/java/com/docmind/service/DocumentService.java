@@ -18,9 +18,7 @@ import com.docmind.entity.Document;
 import com.docmind.mapper.DocumentMapper;
 import com.docmind.repository.DocumentRepository;
 
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.var;
+
 
 @Service
 public class DocumentService {

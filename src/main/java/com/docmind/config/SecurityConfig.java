@@ -41,9 +41,18 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedOriginPatterns(List.of("https://localhost:5173")); //react url
+//		corsConfiguration.setAllowedOriginPatterns(List.of("https://localhost:5173", "http://localhost:5173")); //react url
+//		corsConfiguration.setAllowedOriginPatterns(List.of("*"));
+		
+		// Explicitly allow local dev environments and AWS-hosted domains
+		corsConfiguration.setAllowedOriginPatterns(List.of(
+	            "http://localhost:5173",
+	            "http://localhost:3000",
+	            "http://*.amazonaws.com"
+	        ));
+		
 		corsConfiguration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-		corsConfiguration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+		corsConfiguration.setAllowedHeaders(List.of("*"));
 		corsConfiguration.setExposedHeaders(List.of("Authorization"));
 		corsConfiguration.setAllowCredentials(true);
 		

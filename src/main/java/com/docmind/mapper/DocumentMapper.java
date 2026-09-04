@@ -15,6 +15,7 @@ public class DocumentMapper {
 		myResponse.setFileSize(request.getFileSize());
 		myResponse.setUploadDate(request.getUploadDate());
 		myResponse.setUserId(request.getUserId());
+		myResponse.setSummary(request.getSummary());
 		
 		return myResponse;
 	}
